@@ -1,0 +1,32 @@
+// Cambia provider a postgresql y la URL al desplegar en Vercel Postgres
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model Event {
+  id            String         @id @default(cuid())
+  title         String
+  slug          String         @unique
+  date          DateTime
+  description   String?
+  capacity      Int?
+  registrations Registration[]
+  createdAt     DateTime       @default(now())
+}
+
+model Registration {
+  id          String   @id @default(cuid())
+  event       Event    @relation(fields: [eventId], references: [id])
+  eventId     String
+  name        String
+  email       String
+  token       String   @unique
+  validated   Boolean  @default(false)
+  validatedAt DateTime?
+  createdAt   DateTime @default(now())
+}

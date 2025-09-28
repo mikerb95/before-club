@@ -1,0 +1,27 @@
+html, body {
+  margin: 0;
+  padding: 0;
+  font-family: system-ui, sans-serif;
+  background: #050505;
+  color: #eee;
+}
+a { color: #89b4ff; text-decoration: none; }
+a:hover { text-decoration: underline; }
+button { cursor: pointer; }
+input, textarea, select {
+  background: #111;
+  color: #eee;
+  border: 1px solid #333;
+  padding: 6px 8px;
+  border-radius: 4px;
+}
+form { display: grid; gap: .75rem; }
+.card { background:#111; padding:1rem 1.25rem; border:1px solid #222; border-radius:8px; }
+.grid { display:grid; gap:1rem; }
+.events-grid { grid-template-columns: repeat(auto-fill,minmax(240px,1fr)); }
+.badge { background:#222; padding:2px 6px; border-radius:4px; font-size:.75rem; }
+.btn { background:#fff; color:#000; border:none; padding:8px 14px; border-radius:4px; font-weight:600; }
+.btn.secondary { background:#222; color:#fff; }
+.btn.danger { background:#ff2750; color:#fff; }
+header { padding:1rem 1.5rem; display:flex; justify-content:space-between; align-items:center; background:#080808; border-bottom:1px solid #111; }
+main { padding:1.5rem; max-width:960px; margin:0 auto; }
