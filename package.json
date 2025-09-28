@@ -7,6 +7,8 @@
     "build": "next build",
     "start": "next start",
     "lint": "next lint",
+    "prepare": "husky install",
+    "check-large-files": "node ./scripts/check-large-files.js",
     "typecheck": "tsc --noEmit",
     "prisma:generate": "prisma generate",
     "prisma:migrate": "prisma migrate dev"
@@ -28,6 +30,7 @@
     "@types/react-dom": "18.3.2",
     "eslint": "8.57.0",
     "eslint-config-next": "14.2.9",
-    "prisma": "5.19.1"
+    "prisma": "5.19.1",
+    "husky": "^8.0.3"
   }
 }
