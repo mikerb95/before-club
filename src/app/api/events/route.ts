@@ -15,6 +15,14 @@ export async function POST(req: NextRequest) {
   const slugBase = title.toLowerCase().replace(/[^a-z0-9]+/g,'-').replace(/^-|-$/g,'');
   let slug = slugBase; let i=1;
   while (await prisma.event.findUnique({ where:{ slug } })) slug = `${slugBase}-${i++}`;
-  const event = await prisma.event.create({ data:{ title, date:new Date(date), description, capacity } });
+  const event = await prisma.event.create({
+    data: {
+      title: String(title),
+      slug,
+      date: new Date(date),
+      description: description ? String(description) : null,
+      capacity: capacity != null ? Number(capacity) : null,
+    },
+  });
   return NextResponse.json(event, { status:201 });
 }
