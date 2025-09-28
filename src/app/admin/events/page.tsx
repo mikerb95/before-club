@@ -4,6 +4,7 @@ import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+type EventItem = Awaited<ReturnType<typeof prisma.event.findMany>>[number];
 import slugify from 'slugify';
 
 async function createEventAction(formData: FormData) {
@@ -65,7 +66,7 @@ export default async function AdminEventsPage() {
       <section>
         <h2>Listado</h2>
         <div className="grid events-grid">
-          {events.map(ev => (
+          {events.map((ev: EventItem) => (
             <div key={ev.id} className="card">
               <h3 style={{ marginTop:0 }}>{ev.title}</h3>
               <p style={{ fontSize:'.75rem', opacity:.7 }}>{format(ev.date, "d MMM yyyy HH:mm", { locale: es })}</p>
