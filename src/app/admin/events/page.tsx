@@ -1,10 +1,11 @@
+export const dynamic = 'force-dynamic';
 import { prisma } from '@/lib/prisma';
 import { requireAdmin } from '@/lib/auth';
 import { redirect } from 'next/navigation';
 import { revalidatePath } from 'next/cache';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
-type EventItem = Awaited<ReturnType<typeof prisma.event.findMany>>[number];
+type EventItem = Awaited<ReturnType<typeof prisma.event.findMany>>[number] & { _count?: { registrations: number } };
 import slugify from 'slugify';
 
 async function createEventAction(formData: FormData) {
@@ -70,7 +71,7 @@ export default async function AdminEventsPage() {
             <div key={ev.id} className="card">
               <h3 style={{ marginTop:0 }}>{ev.title}</h3>
               <p style={{ fontSize:'.75rem', opacity:.7 }}>{format(ev.date, "d MMM yyyy HH:mm", { locale: es })}</p>
-              <p style={{ fontSize:'.75rem', opacity:.8 }}>Registros: {ev._count.registrations}{ev.capacity?` / ${ev.capacity}`:''}</p>
+              <p style={{ fontSize:'.75rem', opacity:.8 }}>Registros: {ev._count?.registrations ?? 0}{ev.capacity?` / ${ev.capacity}`:''}</p>
               <a href={`/events/${ev.slug}`}>Ver página pública →</a>
             </div>
           ))}

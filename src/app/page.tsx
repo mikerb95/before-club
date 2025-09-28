@@ -1,7 +1,9 @@
+export const dynamic = 'force-dynamic';
 import { prisma } from '@/lib/prisma';
 import Link from 'next/link';
 import { format } from 'date-fns';
 import { es } from 'date-fns/locale';
+type EventItem = Awaited<ReturnType<typeof prisma.event.findMany>>[number];
 
 export default async function Home() {
   const events = await prisma.event.findMany({ orderBy: { date: 'asc' }, where: { date: { gte: new Date(Date.now() - 24*60*60*1000) } } });
@@ -15,7 +17,7 @@ export default async function Home() {
         <h2>Próximos eventos</h2>
         {events.length === 0 && <p>No hay eventos publicados todavía.</p>}
         <div className="grid events-grid">
-          {events.map(ev => (
+          {events.map((ev: EventItem) => (
             <div key={ev.id} className="card">
               <h3 style={{ marginTop:0 }}>{ev.title}</h3>
               <p style={{ fontSize:'.85rem', opacity:.8 }}>{format(ev.date, "EEEE d 'de' MMMM yyyy HH:mm", { locale: es })}</p>
